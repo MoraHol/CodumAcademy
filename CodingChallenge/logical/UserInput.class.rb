@@ -1,8 +1,8 @@
-require_relative 'DrawingTool.class'
-# a
-class InputUser
-  def initialize(terminal)
-    @terminal = terminal
+# responsible for validating that the user input
+# is a valid command for the application
+class UserInput
+  def initialize(drawing_tool)
+    @drawing_tool = drawing_tool
   end
 
   def validate_command(command)
@@ -12,17 +12,15 @@ class InputUser
     when 'L' then validate_line(command)
     when 'R' then validate_rectangule(command)
     when 'B' then validate_fill(command)
-    when 'Q' then @terminal.flag = true
     else
       error_sintax
     end
   end
 
-  def error_sintax()
+  def error_sintax
     puts 'the inserted command is not correct: '
     puts 'C [w] [h]           Should create a new canvas of width w and height h. '
-    puts "L [x1][y1][x2][y2]               Should create a new line from (x1,y1) to (x2,y2). Currently only horizontal
-    or vertical lines are supported. Horizontal and vertical lines will be drawn
+    puts "L [x1][y1][x2][y2]               Should create a new line from (x1,y1) to (x2,y2). Currently only horizontal or vertical lines are supported. Horizontal and vertical lines will be drawn
     using the 'x' character. "
     puts "R [x1][y1][x2][y2]         Should create a new rectangle, whose upper left corner is (x1,y1) and
     lower right corner is (x2,y2). Horizontal and vertical lines will be drawn
@@ -36,7 +34,7 @@ class InputUser
 
   def validate_canvas(command)
     if command.size == 3
-      @terminal.painter.create_new_canvas(command[1], command[2])
+      @drawing_tool.painter.create_new_canvas(command[1], command[2])
     else
       puts 'missing arguments for this command:'
       puts 'C [w] [h]'
@@ -45,8 +43,8 @@ class InputUser
 
   def validate_line(command)
     if command.size == 5
-      if @terminal.painter.canvas_exist == true
-        @terminal.painter.new_line(command)
+      if @drawing_tool.painter.canvas_exist == true
+        @drawing_tool.painter.new_line(command)
       else
         puts 'no canvas has been created'
       end
@@ -55,11 +53,13 @@ class InputUser
       puts 'L [x1][y1][x2][y2]'
     end
   end
+  # validate that the rectangle command has the necessary parameters
+  # Params:
 
   def validate_rectangule(command)
     if command.size == 5
-      if @terminal.painter.canvas_exist == true
-        @terminal.painter.new_rectangule(command)
+      if @drawing_tool.painter.canvas_exist == true
+        @drawing_tool.painter.new_rectangule(command)
       else
         puts 'no canvas has been created'
       end
@@ -71,7 +71,7 @@ class InputUser
 
   def validate_fill(command)
     if command.size == 4
-      @terminal.painter.fill(command)
+      @drawing_tool.painter.fill(command)
     else
       puts 'missing arguments for this command:'
       puts 'B [x][y][c]'

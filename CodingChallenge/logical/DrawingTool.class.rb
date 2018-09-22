@@ -1,22 +1,24 @@
-require_relative 'InputUser.class'
+require_relative 'UserInput.class'
 require_relative 'Painter.class'
 require_relative '../GUI/ConsolePrint'
 # control input and output
 class DrawingTool
   attr_accessor :painter, :flag
   def initialize
-    @command_reader = InputUser.new(self)
+    @user_input = UserInput.new(self)
     @painter = Painter.new(self)
-    @shower = ConsolePrint.new(@painter.canvas)
-    @flag = false
+    @console_print = ConsolePrint.new(@painter.canvas)
   end
-
+  # Start the application
   def run
-    until @flag
+    puts 'the program is running'
+    loop do
+      print '> '
       input = gets.chomp
-      @command_reader.validate_command(input)
-      @shower.canvas = @painter.canvas
-      @shower.show_canvas
+      exit if input.split[0] == 'Q'
+      @user_input.validate_command(input)
+      @console_print.canvas = @painter.canvas
+      @console_print.show_canvas
     end
   end
 end

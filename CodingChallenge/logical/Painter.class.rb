@@ -15,11 +15,26 @@ class Painter
     puts 'It was created correctly'
   end
 
+  # Verify that the line is horizontal, vertical and
+  # that are points of drawings are within the drawing space
+  # Params:
+  # -command: array of parameters which enter into verification.
+
   def new_line(command)
     if command[1] == command[3]
-      line_shape = :horizontal
+      if command[2].to_i > @canvas.width - 2 || command[4].to_i > @canvas.width - 2
+        puts 'you can not create the line because it is larger than the canvas'
+        return
+      else
+        line_shape = :horizontal
+      end
     elsif command [2] == command[4]
-      line_shape = :vertical
+      if command[1].to_i > @canvas.height - 2 || command[3].to_i > @canvas.height - 2
+        puts 'you can not create the line because it is larger than the canvas'
+        return
+      else
+        line_shape = :vertical
+      end
     else
       puts 'The line you are trying to create is not horizontal or vertical'
       return
