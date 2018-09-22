@@ -1,6 +1,6 @@
-require_relative 'Terminal.class'
-# aasmkaskas
-class CommandReader
+require_relative 'DrawingTool.class'
+# a
+class InputUser
   def initialize(terminal)
     @terminal = terminal
   end
@@ -36,7 +36,7 @@ class CommandReader
 
   def validate_canvas(command)
     if command.size == 3
-      @terminal.painter.create_new_canvas(command[1],command[2])
+      @terminal.painter.create_new_canvas(command[1], command[2])
     else
       puts 'missing arguments for this command:'
       puts 'C [w] [h]'
@@ -70,7 +70,7 @@ class CommandReader
   end
 
   def validate_fill(command)
-    if commnd.size == 4
+    if command.size == 4
       @terminal.painter.fill(command)
     else
       puts 'missing arguments for this command:'

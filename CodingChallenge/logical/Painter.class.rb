@@ -1,4 +1,4 @@
-require '../model/Canvas.class'
+require_relative '../model/Canvas.class'
 # class responsible for drawing on the canvas
 class Painter
   attr_accessor(:canvas, :canvas_exist)
@@ -9,9 +9,10 @@ class Painter
     @canvas = nil
   end
 
-  def create_new_canvas(width, height)
-    @canvas = Canvas.new(width, height)
+  def create_new_canvas(height, width)
+    @canvas = Canvas.new(height, width)
     @canvas_exist = true
+    puts 'It was created correctly'
   end
 
   def new_line(command)
